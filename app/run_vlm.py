@@ -18,7 +18,7 @@ def main(app_config:dict):
             ModelUtils.save_pretrained_llm_from_HF(
                 HF_path=app_config["HF_path"],
                 model_name=app_config["model_name"],
-                model_type=app_config["model_type"]
+                model_type=app_config["model_type"],
                 **model_config
             )
             match app_config["model_type"]:
