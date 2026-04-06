@@ -16,8 +16,7 @@ image_paths=[
     os.path.join("dataset", "images", "0000088002798.png"), # 식품사진
 ]
 
-model=ModelUtils.load_local_causal_llm(model_name=f"Qwen3.5-9B")
-tokenizer=ModelUtils.load_local_tokenizer(model_name=f"Qwen3.5-9B")
+model=ModelUtils.load_local_llm(model_name=f"Qwen3.5-9B",model_type=f"vlm")
 processor=AutoProcessor.from_pretrained("Qwen/Qwen3.5-9B")
 
 """
