@@ -1,5 +1,16 @@
 import os
-from transformers import AutoTokenizer,AutoModelForCausalLM
+import torch
+from transformers import AutoTokenizer,AutoModelForCausalLM,AutoModelForImageTextToText
+from transformers import LogitsProcessor
+
+class RestrictTokensProcessor(LogitsProcessor):
+    def __init__(self,allowed_token_ids):
+        self.allowed_token_ids=allowed_token_ids
+
+    def __call__(self,input_ids,scores):
+        masked=torch.full_like(scores,float("-inf"))
+        masked[:,self.allowed_token_ids]=scores[:,self.allowed_token_ids]
+        return masked
 
 class ModelUtils:
     """
@@ -25,6 +36,13 @@ class ModelUtils:
         print(f"Save pretrained causal llm: {model_name} from {HF_path}!")
 
     @staticmethod
+    def save_pretrained_vlm_from_HF(HF_path:str,model_name:str,**kwargs):
+        """
+        """
+        model_path=os.path.join(ModelUtils.dir_path,"pretrained",model_name)
+        os.makedirs(model_path,exist_ok=True) # 해당 경로의 모든 폴더 없으면 생성
+
+    @staticmethod
     def save_tokenizer_from_HF(HF_path:str,model_name:str):
         """
         """
@@ -37,16 +55,12 @@ class ModelUtils:
         print(f"Save tokenizer for pretrained causal llm: {model_name} from {HF_path}!")
     
     @staticmethod
-    def load_local_causal_llm(model_name:str,**kwargs):
+    def load_local_causal_llm(model_name:str):
         """
-        model_config
-            torch_dtype: Auto or torch.bfloat16 (GPU)
-            device_map: "Auto", "cuda:0" or "cpu"
         """
         model_path=os.path.join(ModelUtils.dir_path,"pretrained",model_name)
         model=AutoModelForCausalLM.from_pretrained(
-            model_path, 
-            torch_dtype=kwargs["torch_dtype"]
+            model_path
         )
         return model
 

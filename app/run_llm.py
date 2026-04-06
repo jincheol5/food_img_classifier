@@ -30,7 +30,16 @@ def main(app_config:dict):
             App 2.
 
             """
-
+            model_config={
+                "torch_dtype":torch.bfloat16,
+                "device_map":"auto"
+            }
+            model=ModelUtils.load_local_causal_llm(
+                model_name=app_config["model_name"],
+            )
+            tokenizer=ModelUtils.load_local_tokenizer(
+                model_name=app_config["model_name"],
+            )
 
 
 
