@@ -7,7 +7,7 @@ class ModelUtils:
     dir_path=os.path.join("..","data","llm")
 
     @staticmethod
-    def save_pretrained_causal_llm_from_HF(HF_path:str,model_name:str,model_config:dict):
+    def save_pretrained_causal_llm_from_HF(HF_path:str,model_name:str,**kwargs):
         """
         model_config
             torch_dtype: auto or torch.bfloat16 (GPU)
@@ -18,8 +18,8 @@ class ModelUtils:
 
         model=AutoModelForCausalLM.from_pretrained(
             pretrained_model_name_or_path=HF_path,
-            torch_dtype=model_config["torch_dtype"] ,
-            device_map=model_config["device_map"] 
+            torch_dtype=kwargs["torch_dtype"] ,
+            device_map=kwargs["device_map"] 
         )
         model.save_pretrained(model_path)
         print(f"Save pretrained causal llm: {model_name} from {HF_path}!")
@@ -37,7 +37,7 @@ class ModelUtils:
         print(f"Save tokenizer for pretrained causal llm: {model_name} from {HF_path}!")
     
     @staticmethod
-    def load_local_causal_llm(model_name:str,model_config:dict):
+    def load_local_causal_llm(model_name:str,**kwargs):
         """
         model_config
             torch_dtype: Auto or torch.bfloat16 (GPU)
@@ -46,17 +46,16 @@ class ModelUtils:
         model_path=os.path.join(ModelUtils.dir_path,"pretrained",model_name)
         model=AutoModelForCausalLM.from_pretrained(
             model_path, 
-            torch_dtype=model_config["torch_dtype"]
+            torch_dtype=kwargs["torch_dtype"]
         )
         return model
 
     @staticmethod
-    def load_local_tokenizer(model_name:str,model_config:dict):
+    def load_local_tokenizer(model_name:str):
         """
         """
         model_path=os.path.join(ModelUtils.dir_path,"pretrained",model_name)
         tokenizer=AutoTokenizer.from_pretrained(
-            pretrained_model_name_or_path=model_path,
-            trust_remote_code=model_config['trust_remote_code']
+            pretrained_model_name_or_path=model_path
         )
         return tokenizer
