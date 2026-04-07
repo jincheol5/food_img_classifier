@@ -1,4 +1,17 @@
-from langchain_core.messages import HumanMessage
+import os
+from transformers import pipeline
 
-msg=HumanMessage("AI가 뭐야?")
-print(msg.content)
+image_path=os.path.join("dataset", "images", "8800279679073.png")
+
+pipe=pipeline("image-text-to-text", model="prithivMLmods/Camel-Doc-OCR-080125-GGUF")
+messages = [
+    {
+        "role": "user",
+        "content": [
+            {"type": "image", "url": image_path},
+            {"type": "text", "text": "What animal is on the candy?"}
+        ]
+    },
+]
+result=pipe(text=messages)
+print(result[0]["generated_text"])
