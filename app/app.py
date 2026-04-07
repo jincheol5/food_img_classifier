@@ -11,8 +11,8 @@ from transformers import AutoProcessor
 """
 
 image_paths=[
-    os.path.join("dataset", "images", "2087686040757.png"), # 원재료
     os.path.join("dataset", "images", "8800279679073.png"), # 영양성분
+    os.path.join("dataset", "images", "2087686040757.png"), # 원재료
     os.path.join("dataset", "images", "0000088002798.png"), # 식품사진
 ]
 

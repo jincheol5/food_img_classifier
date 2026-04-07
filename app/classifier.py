@@ -2,7 +2,7 @@ import os
 import argparse
 import torch
 from modules import ModelUtils,DataUtils
-from modules import get_system_prompt_for_OCR,get_human_prompt_for_OCR
+from modules import get_system_prompt_for_OCR,get_human_prompt_for_OCR,get_system_prompt_for_classifier,get_human_prompt_for_classifier
 
 def chunk_list(lst,chunk_size):
     """리스트를 chunk_size 단위로 나누기"""
@@ -16,14 +16,14 @@ def get_batch_messages(image_paths: list):
             {
                 "role":"system",
                 "content":[
-                    {"type":"text","text":get_system_prompt_for_OCR()}
+                    {"type":"text","text":get_system_prompt_for_classifier()}
                 ]
             },
             {
                 "role":"user",
                 "content":[
                     {"type":"image","url":url},
-                    {"type":"text","text":get_human_prompt_for_OCR()}
+                    {"type":"text","text":get_human_prompt_for_classifier()}
                 ]
             }
         ])
