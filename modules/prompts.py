@@ -1,5 +1,14 @@
 
-def get_system_prompt():
+def get_system_prompt_for_OCR():
+    return f"""
+
+
+"""
+
+def get_human_prompt_for_OCR():
+    return f"""Extract raw text."""
+
+def get_system_prompt_for_classifier():
     return f"""
 You are a strict image classification model.
 
@@ -27,7 +36,7 @@ Strict output rules:
 If the output is not exactly one of [0,1,2], it is considered incorrect.
 """
 
-def get_human_prompt():
+def get_human_prompt_for_classifier():
     return f"""
 Please classify the given image.
 """

@@ -1,7 +1,7 @@
 import os
 import torch
 from modules import ModelUtils,RestrictTokensProcessor
-from modules import get_system_prompt,get_human_prompt
+from modules import get_system_prompt_for_classifier,get_human_prompt_for_classifier
 from transformers import AutoProcessor
 
 """
@@ -28,7 +28,7 @@ messages=[
         "content":[
             {
                 "type":"text",
-                "text":get_system_prompt()
+                "text":get_system_prompt_for_classifier()
             }
         ] 
     },
@@ -41,7 +41,7 @@ messages=[
             },
             {
                 "type":"text",
-                "text":get_human_prompt()
+                "text":get_human_prompt_for_classifier()
             }
         ] 
     }
@@ -71,14 +71,14 @@ batch 추론
 #         {
 #             "role": "system",
 #             "content": [
-#                 {"type": "text", "text": get_system_prompt()}
+#                 {"type": "text", "text": get_system_prompt_for_classifier()}
 #             ]
 #         },
 #         {
 #             "role": "user",
 #             "content": [
 #                 {"type": "image", "url": url}, 
-#                 {"type": "text", "text": get_human_prompt()}
+#                 {"type": "text", "text": get_human_prompt_for_classifier()}
 #             ]
 #         }
 #     ])
