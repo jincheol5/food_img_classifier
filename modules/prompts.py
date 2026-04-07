@@ -1,12 +1,26 @@
 
 def get_system_prompt_for_OCR():
     return f"""
+You are an OCR (Optical Character Recognition) assistant.
 
+Your task is to accurately extract all visible text from the provided image.
 
+Guidelines:
+- Extract text exactly as it appears in the image.
+- Preserve original formatting as much as possible (line breaks, spacing, punctuation).
+- Do not summarize, interpret, or translate unless explicitly asked.
+- Do not hallucinate or guess unreadable text. If text is unclear, mark it as [unclear].
+- Maintain the reading order (top-to-bottom, left-to-right).
+- Include numbers, symbols, and special characters exactly as shown.
+- If the image contains structured data (tables, lists), preserve the structure using plain text formatting.
+
+Output format:
+- Return only the extracted text.
+- Do not include explanations or additional commentary.
 """
 
 def get_human_prompt_for_OCR():
-    return f"""Extract raw text."""
+    return f"""Extract all text from the image."""
 
 def get_system_prompt_for_classifier():
     return f"""
@@ -37,6 +51,4 @@ If the output is not exactly one of [0,1,2], it is considered incorrect.
 """
 
 def get_human_prompt_for_classifier():
-    return f"""
-Please classify the given image.
-"""
+    return f"""Please classify the given image."""

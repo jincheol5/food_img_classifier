@@ -46,13 +46,10 @@ def run_batch_OCR(model,processor,image_paths):
 
     input_len=inputs["input_ids"].shape[1]  # 배치 공통 padded input 길이
     results=[]
-    for i,image_path in enumerate(image_paths):
+    for i in image_paths:
         generated_ids=outputs[i][input_len:]
         text=processor.decode(generated_ids,skip_special_tokens=True).strip()
-        results.append({
-            "image_name":os.path.splitext(os.path.basename(image_path))[0],
-            "text": text,
-        })
+        results.append(text)
     return results
 
 def classifier(**kwargs):
@@ -60,16 +57,7 @@ def classifier(**kwargs):
     """
     ### get images
     food_list=DataUtils.get_food_list()
-    
-    idx=0
-    while True:
-        food_id=food_list[idx]
-        image_paths=DataUtils.get_food_images(food_id=food_id)
-        if not image_paths:
-            idx+=1
-            continue
-        else:
-            break
+    image_paths=DataUtils.get_food_images(food_id=food_list[kwargs["food_num"]])
 
     model=ModelUtils.load_local_llm(
         model_name=kwargs["model_name"],
@@ -83,15 +71,19 @@ def classifier(**kwargs):
         processor=processor,
         image_paths=image_paths
     )
+    for result in results:
+        print(result,end="\n\n")
 
 if __name__=="__main__":
     parser=argparse.ArgumentParser()
     parser.add_argument("--app_num",type=int,default=1)
     parser.add_argument("--model_name",type=str,default="Qwen3.5-9B") 
+    parser.add_argument("--food_num",type=int,default=0)
     args=parser.parse_args()
     app_config={
         # app 관련
         "app_num":args.app_num,
-        "model_name":args.model_name
+        "model_name":args.model_name,
+        "food_num":args.food_num
     }
     classifier(**app_config)
