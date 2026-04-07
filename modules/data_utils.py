@@ -9,7 +9,7 @@ class DataUtils:
     def get_food_list():
         food_list_path=os.path.join(DataUtils.dir_path)
         food_list=[
-            name for name in os.listdir()
+            name for name in os.listdir(food_list_path)
             if os.path.isdir(os.path.join(food_list_path,name))
         ]
         return food_list
