@@ -3,13 +3,16 @@ from transformers import pipeline
 
 image_path=os.path.join("dataset", "images", "8800279679073.png")
 
-pipe=pipeline("image-text-to-text", model="prithivMLmods/Camel-Doc-OCR-080125-GGUF")
+pipe = pipeline(
+    "image-text-to-text",
+    model="prithivMLmods/Camel-Doc-OCR-080125",
+)
 messages = [
     {
         "role": "user",
         "content": [
             {"type": "image", "url": image_path},
-            {"type": "text", "text": "What animal is on the candy?"}
+            {"type": "text", "text": "Extract raw text."}
         ]
     },
 ]
