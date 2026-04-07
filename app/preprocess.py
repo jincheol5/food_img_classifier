@@ -4,6 +4,8 @@ from pathlib import Path
 from tqdm import tqdm
 from collections import defaultdict
 
+print("CWD:", os.getcwd())
+
 # 경로 설정
 base_dir = Path(os.path.join("..", "data", "chronolab"))
 pre_raw_images_dir = base_dir / "pre_raw_images"
