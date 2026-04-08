@@ -3,7 +3,7 @@ from transformers import pipeline
 
 image_path=os.path.join("dataset", "images", "8800279679073.png")
 
-pipe = pipeline(
+pipe=pipeline(
     "image-text-to-text",
     model="prithivMLmods/Camel-Doc-OCR-080125",
 )

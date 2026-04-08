@@ -2,7 +2,7 @@ import os
 import argparse
 from langchain_ollama import ChatOllama
 from langchain_core.messages import SystemMessage,HumanMessage
-from modules import get_system_prompt,get_human_prompt
+from modules import get_system_prompt_for_classifier,get_human_prompt_for_classifier
 
 def main(app_config:dict):
     match app_config['app_num']:
@@ -16,23 +16,22 @@ def main(app_config:dict):
                 model=app_config['model_name'],
                 base_url=f"http://localhost:{app_config['port']}"
             )
-
-            # image_path=os.path.join("dataset","images","8801045516554.png") # 영양성분 이미지
+            
             # image_path=os.path.join("dataset","images","2087686023125.png") # 원재료 이미지
-            image_path=os.path.join("dataset","images","1500000017972.png") # 그 외 이미지
+            image_path=os.path.join("dataset","images","8801045516554.png") # 영양성분 이미지
+            # image_path=os.path.join("dataset","images","1500000017972.png") # 그 외 이미지
 
-            system_msg=SystemMessage(content=get_system_prompt())
+            system_msg=SystemMessage(content=get_system_prompt_for_classifier())
             human_msg=HumanMessage(
                 content=[
                     {
                         "type":"text",
-                        "text":get_human_prompt()
+                        "text":get_human_prompt_for_classifier()
                     },
                     {
                         "type":"image_url",
                         "image_url":image_path
                     }
-
                 ]
             )
 
